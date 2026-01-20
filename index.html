@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Miko Italian Adventure 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Bradley Hand', cursive, sans-serif;
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 50%, #ff7675 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .cover-page {
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-bottom: 40px;
+            border: 8px solid #e17055;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,.5) 10px, rgba(255,255,255,.5) 20px),
+                linear-gradient(to bottom, #fff5f5, #ffe8e8);
+        }
+
+        .cover-page h1 {
+            font-size: 3.5em;
+            color: #d63031;
+            text-shadow: 3px 3px 0px #fdcb6e;
+            margin-bottom: 20px;
+            transform: rotate(-2deg);
+        }
+
+        .cover-page .subtitle {
+            font-size: 1.8em;
+            color: #0984e3;
+            margin: 20px 0;
+        }
+
+        .cover-page .family {
+            font-size: 1.3em;
+            color: #6c5ce7;
+            margin: 15px 0;
+        }
+
+        .cover-page .flag {
+            font-size: 5em;
+            margin: 20px 0;
+        }
+
+        .italy-map {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border: 6px solid #0984e3;
+        }
+
+        .italy-map h2 {
+            text-align: center;
+            color: #2d3436;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .map-svg {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .map-legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid;
+        }
+
+        .legend-item.venice { border-color: #0984e3; }
+        .legend-item.florence { border-color: #e17055; }
+        .legend-item.sardinia { border-color: #00b894; }
+        .legend-item.rome { border-color: #fdcb6e; }
+
+        .legend-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .legend-item.venice .legend-dot { background: #0984e3; }
+        .legend-item.florence .legend-dot { background: #e17055; }
+        .legend-item.sardinia .legend-dot { background: #00b894; }
+        .legend-item.rome .legend-dot { background: #fdcb6e; }
+
+        .navigation {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: rotate(-1deg);
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .nav-btn:hover {
+            transform: rotate(1deg) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .day-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 5px solid;
+            transform: rotate(0.5deg);
+            transition: transform 0.3s;
+        }
+
+        .day-card:nth-child(even) {
+            transform: rotate(-0.5deg);
+        }
+
+        .day-card:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        .day-card.venice { border-color: #0984e3; }
+        .day-card.florence { border-color: #e17055; }
+        .day-card.sardinia { border-color: #00b894; }
+        .day-card.rome { border-color: #fdcb6e; }
+
+        .day-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: -30px -30px 20px -30px;
+            text-align: center;
+        }
+
+        .day-header h2 {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+
+        .day-header .date {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .info-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #6c5ce7;
+        }
+
+        .info-section h3 {
+            color: #2d3436;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .info-section p {
+            margin: 5px 0;
+            line-height: 1.6;
+            color: #636e72;
+        }
+
+        .confirmation {
+            background: #fff3cd;
+            padding: 8px 12px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 5px;
+            font-weight: bold;
+            color: #856404;
+        }
+
+        .map-placeholder {
+            background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+            border: 3px dashed #00acc1;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            margin: 20px 0;
+            color: #00838f;
+            font-size: 1.2em;
+        }
+
+        .journal-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #fff9e6;
+            border-radius: 10px;
+            border: 3px solid #fdcb6e;
+        }
+
+        .journal-entry {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .journal-entry .timestamp {
+            color: #636e72;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .add-btn {
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 20px;
+            font-size: 1em;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            margin: 10px 5px;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .add-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .photo-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transform: rotate(1deg);
+            transition: transform 0.3s;
+        }
+
+        .photo-item:nth-child(even) {
+            transform: rotate(-1deg);
+        }
+
+        .photo-item:hover {
+            transform: rotate(0deg) scale(1.05);
+            z-index: 10;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-content h3 {
+            margin-bottom: 20px;
+            color: #2d3436;
+        }
+
+        .modal-content textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 10px;
+            border: 2px solid #dfe6e9;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1em;
+            resize: vertical;
+        }
+
+        .modal-content input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .modal-content input[type="text"],
+        .modal-content input[type="time"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 2px solid #dfe6e9;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1em;
+        }
+
+        .modal-content label {
+            display: block;
+            margin-top: 10px;
+            color: #2d3436;
+            font-weight: bold;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-buttons button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .save-btn {
+            background: #00b894;
+            color: white;
+        }
+
+        .cancel-btn {
+            background: #636e72;
+            color: white;
+        }
+
+        .activities-list {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .activities-list ul {
+            margin-left: 20px;
+        }
+
+        .activities-list li {
+            margin: 8px 0;
+            color: #2d3436;
+        }
+
+        .custom-activities {
+            margin-top: 20px;
+        }
+
+        .custom-activity {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #6c5ce7;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .custom-activity h4 {
+            color: #2d3436;
+            margin-bottom: 8px;
+        }
+
+        .custom-activity p {
+            margin: 4px 0;
+            color: #636e72;
+        }
+
+        .delete-activity {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #d63031;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .delete-activity:hover {
+            background: #e74c3c;
+        }
+
+        @media (max-width: 768px) {
+            .cover-page h1 {
+                font-size: 2em;
+            }
+            
+            .cover-page .subtitle {
+                font-size: 1.2em;
+            }
+
+            .day-header h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Cover Page -->
+        <div class="cover-page">
+            <h1>🍝 The Miko Italian Adventure 🍕</h1>
+            <div class="flag">🇮🇹</div>
+            <div class="subtitle">June 5-20, 2026</div>
+            <div class="family">Stephen, Supaporn & Daniel</div>
+            <div class="subtitle" style="font-size: 1.2em; margin-top: 30px;">
+                Atlanta ✈️ Venice 🚂 Florence 🚗 Sardinia ✈️ Rome ✈️ Atlanta
+            </div>
+        </div>
+
+        <!-- Journey Route -->
+        <div class="italy-map">
+            <h2>🗺️ Our Italian Journey</h2>
+            
+            <div style="background: white; padding: 40px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                <!-- Route visualization -->
+                <div style="display: flex; flex-direction: column; gap: 30px; max-width: 800px; margin: 0 auto;">
+                    
+                    <!-- Atlanta to Venice -->
+                    <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap; justify-content: center;">
+                        <div style="background: linear-gradient(135deg, #74b9ff, #0984e3); color: white; padding: 15px 25px; border-radius: 15px; font-size: 1.2em; font-weight: bold; min-width: 120px; text-align: center;">
+                            Atlanta
+                        </div>
+                        <div style="font-size: 2em;">✈️</div>
+                        <div style="background: linear-gradient(135deg, #74b9ff, #0984e3); color: white; padding: 15px 25px; border-radius: 15px; font-size: 1.2em; font-weight: bold; min-width: 120px; text-align: center; box-shadow: 0 5px 15px rgba(9, 132, 227, 0.3);">
+                            Venice
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; color: #6c5ce7; font-size: 2em;">↓</div>
+
+                    <!-- Venice to Florence -->
+                    <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap; justify-content: center;">
+                        <div style="background: linear-gradient(135deg, #74b9ff, #0984e3); color: white; padding: 15px 25px; border-radius: 15px; font-size: 1.2em; font-weight: bold; min-width: 120px; text-align: center; box-shadow: 0 5px 15px rgba(9, 132, 227, 0.3);">
+                            Venice
+                        </div>
+                        <div style="font-size: 2em;">🚄</div>
+                        <div style="background: linear-gradient(135deg, #fab1a0, #e17055); color: white; padding: 15px 25px; border-radius: 15px; font-size: 1.2em; font-weight: bold; min-width: 120px; text-align: center; box-shadow: 0 5px 15px rgba(225, 112, 85, 0.3);">
+                            Florence
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; color: #6c5ce7; font-size: 2em;">↓</div>
+
+                    <!-- Florence to Sardinia -->
+                    <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap; justify-content: center;">
+                        <div style="background: linear-gradient(135deg, #fab1a0, #e17055); color: white; padding: 15px 25px; border-radius: 15px; font-size: 1.2em; font-weight: bold; min-width: 120px; text-align: center; box-shadow: 0 5px 15px rgba(225, 112, 85, 0.3);">
+                            Florence
+                        </div>
+                        <div style="font-size: 2em;">🚗</div>
+                        <div style="background: #dfe6e9; color: #2d3436; padding: 15px 25px; border-radius: 15px; font-size: 1.1em; font-weight: bold; min-width: 120px; text-align: center;">
+                            Civitavecchia
+                        </div>
+                        <div style="font-size: 2em;">⛴️</div>
+                        <div style="background: linear-gradient(135deg, #55efc4, #00b894); color: white; padding: 15px 25px; border-radius: 15px; font-size: 1.2em; font-weight: bold; min-width: 120px; text-align: center; box-shadow: 0 5px 15px rgba(0, 184, 148, 0.3);">
+                            Sardinia
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; color: #6c5ce7; font-size: 2em;">↓</div>
+
+                    <!-- Sardinia to Rome -->
+                    <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap; justify-content: center;">
+                        <div style="background: linear-gradient(135deg, #55efc4, #00b894); color: white; padding: 15px 25px; border-radius: 15px; font-size: 1.2em; font-weight: bold; min-width: 120px; text-align: center; box-shadow: 0 5px 15px rgba(0, 184, 148, 0.3);">
+                            Sardinia
+                        </div>
+                        <div style="font-size: 2em;">✈️</div>
+                        <div style="background: #dfe6e9; color: #2d3436; padding: 15px 25px; border-radius: 15px; font-size: 1.1em; font-weight: bold; min-width: 120px; text-align: center;">
+                            Naples
+                        </div>
+                        <div style="font-size: 2em;">🚄</div>
+                        <div style="background: linear-gradient(135deg, #ffeaa7, #fdcb6e); color: #2d3436; padding: 15px 25px; border-radius: 15px; font-size: 1.2em; font-weight: bold; min-width: 120px; text-align: center; box-shadow: 0 5px 15px rgba(253, 203, 110, 0.3);">
+                            Rome
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; color: #6c5ce7; font-size: 2em;">↓</div>
+
+                    <!-- Rome to Atlanta -->
+                    <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap; justify-content: center;">
+                        <div style="background: linear-gradient(135deg, #ffeaa7, #fdcb6e); color: #2d3436; padding: 15px 25px; border-radius: 15px; font-size: 1.2em; font-weight: bold; min-width: 120px; text-align: center; box-shadow: 0 5px 15px rgba(253, 203, 110, 0.3);">
+                            Rome
+                        </div>
+                        <div style="font-size: 2em;">✈️</div>
+                        <div style="background: linear-gradient(135deg, #74b9ff, #0984e3); color: white; padding: 15px 25px; border-radius: 15px; font-size: 1.2em; font-weight: bold; min-width: 120px; text-align: center;">
+                            Atlanta
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="map-legend" style="margin-top: 40px;">
+                <div class="legend-item venice">
+                    <div class="legend-dot"></div>
+                    <div><strong>Venice</strong><br>June 6-9 (3 nights)</div>
+                </div>
+                <div class="legend-item florence">
+                    <div class="legend-dot"></div>
+                    <div><strong>Florence</strong><br>June 9-12 (3 nights)</div>
+                </div>
+                <div class="legend-item sardinia">
+                    <div class="legend-dot"></div>
+                    <div><strong>Sardinia</strong><br>June 13-17 (4 nights)</div>
+                </div>
+                <div class="legend-item rome">
+                    <div class="legend-dot"></div>
+                    <div><strong>Rome</strong><br>June 17-20 (3 nights)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button class="nav-btn" onclick="scrollToSection('venice')">🛶 Venice</button>
+            <button class="nav-btn" onclick="scrollToSection('florence')">🎨 Florence</button>
+            <button class="nav-btn" onclick="scrollToSection('sardinia')">🏖️ Sardinia</button>
+            <button class="nav-btn" onclick="scrollToSection('rome')">🏛️ Rome</button>
+        </div>
+
+        <!-- Day 1: June 5 - Departure -->
+        <div class="day-card venice">
+            <div class="day-header">
+                <h2>Day 1: Departure!</h2>
+                <div class="date">Thursday, June 5, 2026</div>
+            </div>
+            
+            <div class="info-section">
+                <h3>✈️ Flight to Venice</h3>
+                <p><strong>Delta Flight DL 192</strong></p>
+                <p>📍 Departs: Atlanta (ATL) at 5:30 PM</p>
+                <p>📍 Arrives: Venice (VCE) at 8:55 AM (June 6)</p>
+                <p class="confirmation">Confirmation: G8ZNEV</p>
+            </div>
+
+            <div class="map-placeholder">🗺️ Atlanta → Venice</div>
+
+            <div class="journal-section">
+                <h3>✏️ Travel Journal</h3>
+                <div id="journal-day6"></div>
+                <button class="add-btn" onclick="addJournal('day6')">+ Add Journal Entry</button>
+                <button class="add-btn" onclick="addPhoto('day6')">📷 Add Photos</button>
+                <button class="add-btn" onclick="addActivity('day6')">🎫 Add Activity/Reservation</button>
+                <div class="custom-activities" id="activities-day6"></div>
+                <div class="photo-gallery" id="photos-day6"></div>
+            </div>
+        </div>
+
+        <!-- Day 7: June 11 - Florence & Car Rental -->
+        <div class="day-card florence">
+            <div class="day-header">
+                <h2>Day 7: Florence & Pick Up Rental Car</h2>
+                <div class="date">Wednesday, June 11, 2026</div>
+            </div>
+
+            <div class="info-section">
+                <h3>🚗 Car Rental Pick-up</h3>
+                <p><strong>Drivalia - Fiat Tipo Station Wagon (or similar)</strong></p>
+                <p>📍 Florence Santa Maria Novella Railway Station</p>
+                <p>📍 Via Palazzuolo, 146, Firenze, 50123</p>
+                <p>🕐 Pick-up: 10:00 AM</p>
+                <p>📞 +39 345 433 2872</p>
+                <p>⚠️ Bring: International Driving Permit, Driver's License, Voucher</p>
+                <p class="confirmation">Voucher: 778099102 • Confirmation: 1075972</p>
+            </div>
+
+            <div class="activities-list">
+                <h3>💡 Explore with your car!</h3>
+                <ul>
+                    <li>Tuscan countryside</li>
+                    <li>Pisa (Leaning Tower)</li>
+                    <li>San Gimignano</li>
+                    <li>Siena</li>
+                </ul>
+            </div>
+
+            <div class="map-placeholder">🗺️ Florence & Tuscany</div>
+
+            <div class="journal-section">
+                <h3>✏️ Travel Journal</h3>
+                <div id="journal-day7"></div>
+                <button class="add-btn" onclick="addJournal('day7')">+ Add Journal Entry</button>
+                <button class="add-btn" onclick="addPhoto('day7')">📷 Add Photos</button>
+                <button class="add-btn" onclick="addActivity('day7')">🎫 Add Activity/Reservation</button>
+                <div class="custom-activities" id="activities-day7"></div>
+                <div class="photo-gallery" id="photos-day7"></div>
+            </div>
+        </div>
+
+        <!-- Day 8: June 12 - Drive to Ferry -->
+        <div class="day-card sardinia" id="sardinia">
+            <div class="day-header">
+                <h2>Day 8: Road Trip to Sardinia Ferry</h2>
+                <div class="date">Thursday, June 12, 2026</div>
+            </div>
+
+            <div class="info-section">
+                <h3>🏨 Hotel Check-out</h3>
+                <p>Spirit of Florence - Check out by 10:30 AM</p>
+            </div>
+
+            <div class="info-section">
+                <h3>🚗 Drive to Civitavecchia</h3>
+                <p>📍 Florence → Civitavecchia (approx. 3.5 hours)</p>
+                <p>⚠️ Arrive at port at least 2 hours before departure (by 8:45 PM)</p>
+            </div>
+
+            <div class="info-section">
+                <h3>⛴️ Overnight Ferry to Sardinia</h3>
+                <p><strong>Grimaldi Lines - MN CRUISE BONARIA</strong></p>
+                <p>📍 Departs: Civitavecchia at 10:45 PM</p>
+                <p>📍 Arrives: Olbia, Sardinia at 6:15 AM (June 13)</p>
+                <p>⏱️ Duration: 7 hours 30 minutes</p>
+                <p>🛏️ Exterior Cabin (WC, Shower, Telephone)</p>
+                <p>🚗 Vehicle on board: Fiat 500 (rental car)</p>
+                <p class="confirmation">Grimaldi: G260025114 • Ferryscanner: B143482360</p>
+            </div>
+
+            <div class="map-placeholder">🗺️ Florence → Civitavecchia → Olbia</div>
+
+            <div class="journal-section">
+                <h3>✏️ Travel Journal</h3>
+                <div id="journal-day8"></div>
+                <button class="add-btn" onclick="addJournal('day8')">+ Add Journal Entry</button>
+                <button class="add-btn" onclick="addPhoto('day8')">📷 Add Photos</button>
+                <button class="add-btn" onclick="addActivity('day8')">🎫 Add Activity/Reservation</button>
+                <div class="custom-activities" id="activities-day8"></div>
+                <div class="photo-gallery" id="photos-day8"></div>
+            </div>
+        </div>
+
+        <!-- Day 9: June 13 - Arrive Sardinia -->
+        <div class="day-card sardinia">
+            <div class="day-header">
+                <h2>Day 9: Welcome to Sardinia!</h2>
+                <div class="date">Friday, June 13, 2026</div>
+            </div>
+
+            <div class="info-section">
+                <h3>⛴️ Ferry Arrival</h3>
+                <p>Arrive in Olbia at 6:15 AM with rental car</p>
+            </div>
+
+            <div class="info-section">
+                <h3>🏨 Terradimare Resort & Spa</h3>
+                <p>📍 Via Naviglio, 08020 San Teodoro</p>
+                <p>📞 +39 0784 851116</p>
+                <p>🕐 Check-in: from 3:00 PM (early check-in requested)</p>
+                <p>🕐 Check-out: June 17 by 10:00 AM</p>
+                <p>🏡 One-Bedroom Apartment • Free beach shuttle (June 15-Sept 15)</p>
+                <p>💰 Deposit: €200 cash required at check-in</p>
+                <p class="confirmation">Confirmation: 6758645897</p>
+            </div>
+
+            <div class="activities-list">
+                <h3>🏖️ Suggested Activities</h3>
+                <ul>
+                    <li>Beach relaxation at San Teodoro</li>
+                    <li>La Cinta Beach</li>
+                    <li>Explore the Costa Smeralda</li>
+                </ul>
+            </div>
+
+            <div class="map-placeholder">🗺️ Olbia → San Teodoro</div>
+
+            <div class="journal-section">
+                <h3>✏️ Travel Journal</h3>
+                <div id="journal-day9"></div>
+                <button class="add-btn" onclick="addJournal('day9')">+ Add Journal Entry</button>
+                <button class="add-btn" onclick="addPhoto('day9')">📷 Add Photos</button>
+                <button class="add-btn" onclick="addActivity('day9')">🎫 Add Activity/Reservation</button>
+                <div class="custom-activities" id="activities-day9"></div>
+                <div class="photo-gallery" id="photos-day9"></div>
+            </div>
+        </div>
+
+        <!-- Day 10: June 14 - Sardinia -->
+        <div class="day-card sardinia">
+            <div class="day-header">
+                <h2>Day 10: Beach Day!</h2>
+                <div class="date">Saturday, June 14, 2026</div>
+            </div>
+
+            <div class="activities-list">
+                <h3>🏖️ Suggested Activities</h3>
+                <ul>
+                    <li>La Cinta Beach</li>
+                    <li>Cala Brandinchi</li>
+                    <li>Water sports</li>
+                    <li>Local seafood restaurants</li>
+                </ul>
+            </div>
+
+            <div class="map-placeholder">🗺️ San Teodoro Beaches</div>
+
+            <div class="journal-section">
+                <h3>✏️ Travel Journal</h3>
+                <div id="journal-day10"></div>
+                <button class="add-btn" onclick="addJournal('day10')">+ Add Journal Entry</button>
+                <button class="add-btn" onclick="addPhoto('day10')">📷 Add Photos</button>
+                <button class="add-btn" onclick="addActivity('day10')">🎫 Add Activity/Reservation</button>
+                <div class="custom-activities" id="activities-day10"></div>
+                <div class="photo-gallery" id="photos-day10"></div>
+            </div>
+        </div>
+
+        <!-- Day 11: June 15 - Sardinia -->
+        <div class="day-card sardinia">
+            <div class="day-header">
+                <h2>Day 11: Explore Sardinia</h2>
+                <div class="date">Sunday, June 15, 2026</div>
+            </div>
+
+            <div class="activities-list">
+                <h3>🚗 Suggested Day Trips</h3>
+                <ul>
+                    <li>Costa Smeralda (Porto Cervo, Porto Rotondo)</li>
+                    <li>Capo Testa</li>
+                    <li>Archipelago della Maddalena</li>
+                    <li>Local villages</li>
+                </ul>
+            </div>
+
+            <div class="map-placeholder">🗺️ Northern Sardinia</div>
+
+            <div class="journal-section">
+                <h3>✏️ Travel Journal</h3>
+                <div id="journal-day11"></div>
+                <button class="add-btn" onclick="addJournal('day11')">+ Add Journal Entry</button>
+                <button class="add-btn" onclick="addPhoto('day11')">📷 Add Photos</button>
+                <button class="add-btn" onclick="addActivity('day11')">🎫 Add Activity/Reservation</button>
+                <div class="custom-activities" id="activities-day11"></div>
+                <div class="photo-gallery" id="photos-day11"></div>
+            </div>
+        </div>
+
+        <!-- Day 12: June 16 - Sardinia -->
+        <div class="day-card sardinia">
+            <div class="day-header">
+                <h2>Day 12: Last Day in Paradise</h2>
+                <div class="date">Monday, June 16, 2026</div>
+            </div>
+
+            <div class="activities-list">
+                <h3>🏖️ Relax & Enjoy</h3>
+                <ul>
+                    <li>Beach time</li>
+                    <li>Resort amenities</li>
+                    <li>Pack for tomorrow's travel</li>
+                    <li>Farewell dinner</li>
+                </ul>
+            </div>
+
+            <div class="map-placeholder">🗺️ San Teodoro</div>
+
+            <div class="journal-section">
+                <h3>✏️ Travel Journal</h3>
+                <div id="journal-day12"></div>
+                <button class="add-btn" onclick="addJournal('day12')">+ Add Journal Entry</button>
+                <button class="add-btn" onclick="addPhoto('day12')">📷 Add Photos</button>
+                <button class="add-btn" onclick="addActivity('day12')">🎫 Add Activity/Reservation</button>
+                <div class="custom-activities" id="activities-day12"></div>
+                <div class="photo-gallery" id="photos-day12"></div>
+            </div>
+        </div>
+
+        <!-- Day 13: June 17 - Fly to Naples, Train to Rome -->
+        <div class="day-card rome" id="rome">
+            <div class="day-header">
+                <h2>Day 13: To Rome!</h2>
+                <div class="date">Tuesday, June 17, 2026</div>
+            </div>
+
+            <div class="info-section">
+                <h3>🏨 Resort Check-out</h3>
+                <p>Terradimare Resort & Spa - Check out by 10:00 AM</p>
+            </div>
+
+            <div class="info-section">
+                <h3>🚗 Return Rental Car</h3>
+                <p><strong>Drivalia - Olbia Airport</strong></p>
+                <p>📍 Olbia Airport, 07026</p>
+                <p>📞 +39 0789 645108</p>
+                <p>🕐 Drop-off: 10:00 AM</p>
+                <p>⚠️ Key box at the desk</p>
+            </div>
+
+            <div class="info-section">
+                <h3>✈️ Flight to Naples</h3>
+                <p><strong>Volotea V7 1729</strong></p>
+                <p>📍 Departs: Olbia at 11:35 AM</p>
+                <p>📍 Arrives: Naples at 12:45 PM</p>
+                <p>🎫 Priority boarding, checked bags (Stephen & Supaporn: 20kg each)</p>
+                <p>💺 Seats: 2D, 2E, 2F</p>
+                <p>⚠️ Check-in online 4 days before, arrive 2 hours early</p>
+                <p class="confirmation">Confirmation: L9WQGJ</p>
+            </div>
+
+            <div class="info-section">
+                <h3>🚄 Train to Rome</h3>
+                <p><strong>Frecciarossa 9428</strong></p>
+                <p>📍 Departs: Napoli Centrale at 3:10 PM</p>
+                <p>📍 Arrives: Roma Termini at 4:20 PM</p>
+                <p>⏱️ Duration: 1 hour 10 minutes</p>
+                <p>🎫 1st Class (Flexier fare)</p>
+                <p>⚠️ Early-bird ticket - final confirmation to come</p>
+                <p class="confirmation">Order: C8Z0RETX9SUZM (ItaliaRail)</p>
+            </div>
+
+            <div class="info-section">
+                <h3>🏨 Hotel Smeraldo</h3>
+                <p>📍 Via dei Chiavari 20, Pantheon, 00186 Rome</p>
+                <p>📞 +39 06 689 2121</p>
+                <p>🕐 Check-in: 2:00 PM - 12:00 AM</p>
+                <p>🕐 Check-out: June 20 by 11:00 AM</p>
+                <p>🛏️ Premium Double Room - Annex • Breakfast included</p>
+                <p class="confirmation">Confirmation: 5722839460</p>
+            </div>
+
+            <div class="map-placeholder">🗺️ Olbia → Naples → Rome</div>
+
+            <div class="journal-section">
+                <h3>✏️ Travel Journal</h3>
+                <div id="journal-day13"></div>
+                <button class="add-btn" onclick="addJournal('day13')">+ Add Journal Entry</button>
+                <button class="add-btn" onclick="addPhoto('day13')">📷 Add Photos</button>
+                <button class="add-btn" onclick="addActivity('day13')">🎫 Add Activity/Reservation</button>
+                <div class="custom-activities" id="activities-day13"></div>
+                <div class="photo-gallery" id="photos-day13"></div>
+            </div>
+        </div>
+
+        <!-- Day 14: June 18 - Rome -->
+        <div class="day-card rome">
+            <div class="day-header">
+                <h2>Day 14: Ancient Rome</h2>
+                <div class="date">Wednesday, June 18, 2026</div>
+            </div>
+
+            <div class="activities-list">
+                <h3>🏛️ Suggested Activities</h3>
+                <ul>
+                    <li>Colosseum & Roman Forum</li>
+                    <li>Palatine Hill</li>
+                    <li>Trevi Fountain</li>
+                    <li>Spanish Steps</li>
+                    <li>Pantheon (near hotel!)</li>
+                </ul>
+            </div>
+
+            <div class="map-placeholder">🗺️ Rome - Ancient Sites</div>
+
+            <div class="journal-section">
+                <h3>✏️ Travel Journal</h3>
+                <div id="journal-day14"></div>
+                <button class="add-btn" onclick="addJournal('day14')">+ Add Journal Entry</button>
+                <button class="add-btn" onclick="addPhoto('day14')">📷 Add Photos</button>
+                <button class="add-btn" onclick="addActivity('day14')">🎫 Add Activity/Reservation</button>
+                <div class="custom-activities" id="activities-day14"></div>
+                <div class="photo-gallery" id="photos-day14"></div>
+            </div>
+        </div>
+
+        <!-- Day 15: June 19 - Rome -->
+        <div class="day-card rome">
+            <div class="day-header">
+                <h2>Day 15: Vatican & More</h2>
+                <div class="date">Thursday, June 19, 2026</div>
+            </div>
+
+            <div class="activities-list">
+                <h3>⛪ Suggested Activities</h3>
+                <ul>
+                    <li>Vatican Museums & Sistine Chapel</li>
+                    <li>St. Peter's Basilica</li>
+                    <li>Castel Sant'Angelo</li>
+                    <li>Trastevere neighborhood</li>
+                    <li>Final gelato & shopping</li>
+                </ul>
+            </div>
+
+            <div class="map-placeholder">🗺️ Rome - Vatican City</div>
+
+            <div class="journal-section">
+                <h3>✏️ Travel Journal</h3>
+                <div id="journal-day15"></div>
+                <button class="add-btn" onclick="addJournal('day15')">+ Add Journal Entry</button>
+                <button class="add-btn" onclick="addPhoto('day15')">📷 Add Photos</button>
+                <button class="add-btn" onclick="addActivity('day15')">🎫 Add Activity/Reservation</button>
+                <div class="custom-activities" id="activities-day15"></div>
+                <div class="photo-gallery" id="photos-day15"></div>
+            </div>
+        </div>
+
+        <!-- Day 16: June 20 - Return Home -->
+        <div class="day-card rome">
+            <div class="day-header">
+                <h2>Day 16: Arrivederci Italia!</h2>
+                <div class="date">Friday, June 20, 2026</div>
+            </div>
+
+            <div class="info-section">
+                <h3>🏨 Hotel Check-out</h3>
+                <p>Hotel Smeraldo - Check out by 11:00 AM</p>
+            </div>
+
+            <div class="info-section">
+                <h3>✈️ Flight Home</h3>
+                <p><strong>Delta Flight DL 215</strong></p>
+                <p>📍 Departs: Rome (FCO) at 9:45 AM</p>
+                <p>📍 Arrives: Atlanta (ATL) at 2:41 PM (same day)</p>
+                <p>⚠️ Arrive at airport 3 hours early for international flight</p>
+                <p class="confirmation">Confirmation: G8ZNEV</p>
+            </div>
+
+            <div class="map-placeholder">🗺️ Rome → Atlanta</div>
+
+            <div class="journal-section">
+                <h3>✏️ Travel Journal</h3>
+                <div id="journal-day16"></div>
+                <button class="add-btn" onclick="addJournal('day16')">+ Add Journal Entry</button>
+                <button class="add-btn" onclick="addPhoto('day16')">📷 Add Photos</button>
+                <button class="add-btn" onclick="addActivity('day16')">🎫 Add Activity/Reservation</button>
+                <div class="custom-activities" id="activities-day16"></div>
+                <div class="photo-gallery" id="photos-day16"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modal for adding journal entries -->
+    <div id="journalModal" class="modal">
+        <div class="modal-content">
+            <h3>✏️ Add Journal Entry</h3>
+            <textarea id="journalText" placeholder="Write about your day..."></textarea>
+            <div class="modal-buttons">
+                <button class="save-btn" onclick="saveJournal()">Save Entry</button>
+                <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for adding photos -->
+    <div id="photoModal" class="modal">
+        <div class="modal-content">
+            <h3>📷 Add Photos</h3>
+            <input type="file" id="photoInput" accept="image/*" multiple>
+            <div class="modal-buttons">
+                <button class="save-btn" onclick="savePhotos()">Add Photos</button>
+                <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for adding activities/reservations -->
+    <div id="activityModal" class="modal">
+        <div class="modal-content">
+            <h3>🎫 Add Activity/Reservation</h3>
+            <label>Activity Name *</label>
+            <input type="text" id="activityName" placeholder="e.g., Uffizi Gallery, Colosseum Tour">
+            
+            <label>Time</label>
+            <input type="time" id="activityTime">
+            
+            <label>Location/Address</label>
+            <input type="text" id="activityLocation" placeholder="e.g., Piazzale degli Uffizi, 6">
+            
+            <label>Confirmation Number</label>
+            <input type="text" id="activityConfirmation" placeholder="e.g., #ABC123456">
+            
+            <label>Additional Notes</label>
+            <textarea id="activityNotes" placeholder="e.g., Meet at entrance, bring ID, etc." style="min-height: 80px;"></textarea>
+            
+            <div class="modal-buttons">
+                <button class="save-btn" onclick="saveActivity()">Save Activity</button>
+                <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentDay = '';
+        let journalData = {};
+        let photoData = {};
+        let activityData = {};
+
+        // Load saved data from storage
+        function loadData() {
+            try {
+                const savedJournals = localStorage.getItem('mikoJournals');
+                const savedPhotos = localStorage.getItem('mikoPhotos');
+                const savedActivities = localStorage.getItem('mikoActivities');
+                
+                if (savedJournals) {
+                    journalData = JSON.parse(savedJournals);
+                    renderAllJournals();
+                }
+                
+                if (savedPhotos) {
+                    photoData = JSON.parse(savedPhotos);
+                    renderAllPhotos();
+                }
+
+                if (savedActivities) {
+                    activityData = JSON.parse(savedActivities);
+                    renderAllActivities();
+                }
+            } catch (e) {
+                console.error('Error loading data:', e);
+            }
+        }
+
+        // Save data to storage
+        function saveData() {
+            try {
+                localStorage.setItem('mikoJournals', JSON.stringify(journalData));
+                localStorage.setItem('mikoPhotos', JSON.stringify(photoData));
+                localStorage.setItem('mikoActivities', JSON.stringify(activityData));
+            } catch (e) {
+                console.error('Error saving data:', e);
+                alert('Error saving data. Your device storage may be full.');
+            }
+        }
+
+        // Add journal entry
+        function addJournal(day) {
+            currentDay = day;
+            document.getElementById('journalModal').classList.add('active');
+            document.getElementById('journalText').value = '';
+        }
+
+        // Save journal entry
+        function saveJournal() {
+            const text = document.getElementById('journalText').value.trim();
+            if (!text) {
+                alert('Please write something first!');
+                return;
+            }
+
+            if (!journalData[currentDay]) {
+                journalData[currentDay] = [];
+            }
+
+            journalData[currentDay].push({
+                text: text,
+                timestamp: new Date().toLocaleString()
+            });
+
+            saveData();
+            renderJournals(currentDay);
+            closeModal();
+        }
+
+        // Add photos
+        function addPhoto(day) {
+            currentDay = day;
+            document.getElementById('photoModal').classList.add('active');
+            document.getElementById('photoInput').value = '';
+        }
+
+        // Save photos
+        function savePhotos() {
+            const input = document.getElementById('photoInput');
+            const files = input.files;
+
+            if (files.length === 0) {
+                alert('Please select at least one photo!');
+                return;
+            }
+
+            if (!photoData[currentDay]) {
+                photoData[currentDay] = [];
+            }
+
+            let filesProcessed = 0;
+
+            for (let i = 0; i < files.length; i++) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    photoData[currentDay].push({
+                        data: e.target.result,
+                        timestamp: new Date().toLocaleString()
+                    });
+
+                    filesProcessed++;
+                    if (filesProcessed === files.length) {
+                        saveData();
+                        renderPhotos(currentDay);
+                        closeModal();
+                    }
+                };
+                reader.readAsDataURL(files[i]);
+            }
+        }
+
+        // Add activity
+        function addActivity(day) {
+            currentDay = day;
+            document.getElementById('activityModal').classList.add('active');
+            // Clear form
+            document.getElementById('activityName').value = '';
+            document.getElementById('activityTime').value = '';
+            document.getElementById('activityLocation').value = '';
+            document.getElementById('activityConfirmation').value = '';
+            document.getElementById('activityNotes').value = '';
+        }
+
+        // Save activity
+        function saveActivity() {
+            const name = document.getElementById('activityName').value.trim();
+            
+            if (!name) {
+                alert('Please enter an activity name!');
+                return;
+            }
+
+            if (!activityData[currentDay]) {
+                activityData[currentDay] = [];
+            }
+
+            activityData[currentDay].push({
+                name: name,
+                time: document.getElementById('activityTime').value,
+                location: document.getElementById('activityLocation').value.trim(),
+                confirmation: document.getElementById('activityConfirmation').value.trim(),
+                notes: document.getElementById('activityNotes').value.trim(),
+                timestamp: new Date().toLocaleString()
+            });
+
+            saveData();
+            renderActivities(currentDay);
+            closeModal();
+        }
+
+        // Delete activity
+        function deleteActivity(day, index) {
+            if (confirm('Are you sure you want to delete this activity?')) {
+                activityData[day].splice(index, 1);
+                saveData();
+                renderActivities(day);
+            }
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('journalModal').classList.remove('active');
+            document.getElementById('photoModal').classList.remove('active');
+            document.getElementById('activityModal').classList.remove('active');
+        }
+
+        // Render journals for a specific day
+        function renderJournals(day) {
+            const container = document.getElementById(`journal-${day}`);
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            if (journalData[day] && journalData[day].length > 0) {
+                journalData[day].forEach((entry, index) => {
+                    const entryDiv = document.createElement('div');
+                    entryDiv.className = 'journal-entry';
+                    entryDiv.innerHTML = `
+                        <div class="timestamp">${entry.timestamp}</div>
+                        <div>${entry.text}</div>
+                    `;
+                    container.appendChild(entryDiv);
+                });
+            }
+        }
+
+        // Render all journals
+        function renderAllJournals() {
+            for (let day in journalData) {
+                renderJournals(day);
+            }
+        }
+
+        // Render photos for a specific day
+        function renderPhotos(day) {
+            const container = document.getElementById(`photos-${day}`);
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            if (photoData[day] && photoData[day].length > 0) {
+                photoData[day].forEach((photo, index) => {
+                    const photoDiv = document.createElement('div');
+                    photoDiv.className = 'photo-item';
+                    photoDiv.innerHTML = `<img src="${photo.data}" alt="Photo from ${day}">`;
+                    container.appendChild(photoDiv);
+                });
+            }
+        }
+
+        // Render all photos
+        function renderAllPhotos() {
+            for (let day in photoData) {
+                renderPhotos(day);
+            }
+        }
+
+        // Render activities for a specific day
+        function renderActivities(day) {
+            const container = document.getElementById(`activities-${day}`);
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            if (activityData[day] && activityData[day].length > 0) {
+                activityData[day].forEach((activity, index) => {
+                    const activityDiv = document.createElement('div');
+                    activityDiv.className = 'custom-activity';
+                    
+                    let html = `
+                        <button class="delete-activity" onclick="deleteActivity('${day}', ${index})">Delete</button>
+                        <h4>${activity.name}</h4>
+                    `;
+                    
+                    if (activity.time) {
+                        html += `<p><strong>⏰ Time:</strong> ${activity.time}</p>`;
+                    }
+                    if (activity.location) {
+                        html += `<p><strong>📍 Location:</strong> ${activity.location}</p>`;
+                    }
+                    if (activity.confirmation) {
+                        html += `<p><strong>🎫 Confirmation:</strong> ${activity.confirmation}</p>`;
+                    }
+                    if (activity.notes) {
+                        html += `<p><strong>📝 Notes:</strong> ${activity.notes}</p>`;
+                    }
+                    
+                    activityDiv.innerHTML = html;
+                    container.appendChild(activityDiv);
+                });
+            }
+        }
+
+        // Render all activities
+        function renderAllActivities() {
+            for (let day in activityData) {
+                renderActivities(day);
+            }
+        }
+
+        // Scroll to section
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const journalModal = document.getElementById('journalModal');
+            const photoModal = document.getElementById('photoModal');
+            const activityModal = document.getElementById('activityModal');
+            if (event.target === journalModal || event.target === photoModal || event.target === activityModal) {
+                closeModal();
+            }
+        }
+
+        // Load data when page loads
+        window.onload = function() {
+            loadData();
+        }
+    </script>
+</body>
+</html>
+                    
+                <div id="journal-day1"></div>
+                <button class="add-btn" onclick="addJournal('day1')">+ Add Journal Entry</button>
+                <button class="add-btn" onclick="addPhoto('day1')">📷 Add Photos</button>
+                <button class="add-btn" onclick="addActivity('day1')">🎫 Add Activity/Reservation</button>
+                <div class="custom-activities" id="activities-day1"></div>
+                <div class="photo-gallery" id="photos-day1"></div>
+            </div>
+        </div>
+
+        <!-- Day 2: June 6 - Arrive Venice -->
+        <div class="day-card venice" id="venice">
+            <div class="day-header">
+                <h2>Day 2: Benvenuti a Venezia!</h2>
+                <div class="date">Friday, June 6, 2026</div>
+            </div>
+
+            <div class="info-section">
+                <h3>🛶 Water Taxi Transfer</h3>
+                <p><strong>Bucintoro Viaggi</strong></p>
+                <p>📍 Pick up: Marco Polo Airport (Desk 71, 1st floor)</p>
+                <p>📍 Drop off: Hotel (50 minutes)</p>
+                <p class="confirmation">Confirmation: GYG48YZ428XH</p>
+            </div>
+
+            <div class="info-section">
+                <h3>🏨 Hotel Rialto</h3>
+                <p>📍 Riva del Ferro, San Marco, 30124 Venice</p>
+                <p>📞 +39 041 520 9166</p>
+                <p>🕐 Check-in: 2:00 PM - 12:00 AM (arriving 10:00-11:00 AM)</p>
+                <p>🛏️ Classic Triple Room • Breakfast included</p>
+                <p class="confirmation">Confirmation: 5994199670 • PIN: 9702</p>
+            </div>
+
+            <div class="map-placeholder">🗺️ Venice - Hotel Rialto near Rialto Bridge</div>
+
+            <div class="journal-section">
+                <h3>✏️ Travel Journal</h3>
+                <div id="journal-day2"></div>
+                <button class="add-btn" onclick="addJournal('day2')">+ Add Journal Entry</button>
+                <button class="add-btn" onclick="addPhoto('day2')">📷 Add Photos</button>
+                <button class="add-btn" onclick="addActivity('day2')">🎫 Add Activity/Reservation</button>
+                <div class="custom-activities" id="activities-day2"></div>
+                <div class="photo-gallery" id="photos-day2"></div>
+            </div>
+        </div>
+
+        <!-- Day 3: June 7 - Venice Islands Tour -->
+        <div class="day-card venice">
+            <div class="day-header">
+                <h2>Day 3: Island Hopping</h2>
+                <div class="date">Saturday, June 7, 2026</div>
+            </div>
+
+            <div class="info-section">
+                <h3>🚤 Murano, Burano & Torcello Tour</h3>
+                <p><strong>CITY TOURS CO LTD</strong></p>
+                <p>🕐 10:30 AM (arrive at 10:20 AM) • 5.5 hours</p>
+                <p>📍 Meet: Riva degli Schiavoni 4142 (in front of Palazzo Cornoldi)</p>
+                <p>📍 8 minutes walk from St. Mark's Square</p>
+                <p class="confirmation">Confirmation: GYGX7NNH572H • PIN: L7#/=vnt</p>
+            </div>
+
+            <div class="activities-list">
+                <h3>🎨 Tour Highlights</h3>
+                <ul>
+                    <li>Murano: Famous glass-making demonstrations</li>
+                    <li>Burano: Colorful houses & lace-making</li>
+                    <li>Torcello: Historic island churches</li>
+                </ul>
+            </div>
+
+            <div class="map-placeholder">🗺️ Murano → Burano → Torcello</div>
+
+            <div class="journal-section">
+                <h3>✏️ Travel Journal</h3>
+                <div id="journal-day3"></div>
+                <button class="add-btn" onclick="addJournal('day3')">+ Add Journal Entry</button>
+                <button class="add-btn" onclick="addPhoto('day3')">📷 Add Photos</button>
+                <button class="add-btn" onclick="addActivity('day3')">🎫 Add Activity/Reservation</button>
+                <div class="custom-activities" id="activities-day3"></div>
+                <div class="photo-gallery" id="photos-day3"></div>
+            </div>
+        </div>
+
+        <!-- Day 4: June 8 - Venice -->
+        <div class="day-card venice">
+            <div class="day-header">
+                <h2>Day 4: Explore Venice</h2>
+                <div class="date">Sunday, June 8, 2026</div>
+            </div>
+
+            <div class="activities-list">
+                <h3>💡 Suggested Activities</h3>
+                <ul>
+                    <li>St. Mark's Basilica & Square</li>
+                    <li>Doge's Palace</li>
+                    <li>Gondola ride</li>
+                    <li>Rialto Market</li>
+                </ul>
+            </div>
+
+            <div class="map-placeholder">🗺️ Venice - Central attractions</div>
+
+            <div class="journal-section">
+                <h3>✏️ Travel Journal</h3>
+                <div id="journal-day4"></div>
+                <button class="add-btn" onclick="addJournal('day4')">+ Add Journal Entry</button>
+                <button class="add-btn" onclick="addPhoto('day4')">📷 Add Photos</button>
+                <button class="add-btn" onclick="addActivity('day4')">🎫 Add Activity/Reservation</button>
+                <div class="custom-activities" id="activities-day4"></div>
+                <div class="photo-gallery" id="photos-day4"></div>
+            </div>
+        </div>
+
+        <!-- Day 5: June 9 - Train to Florence -->
+        <div class="day-card florence" id="florence">
+            <div class="day-header">
+                <h2>Day 5: Ciao Firenze!</h2>
+                <div class="date">Monday, June 9, 2026</div>
+            </div>
+
+            <div class="info-section">
+                <h3>🏨 Hotel Check-out</h3>
+                <p>Hotel Rialto - Check out by 11:00 AM</p>
+            </div>
+
+            <div class="info-section">
+                <h3>🚄 Train to Florence</h3>
+                <p><strong>Frecciarossa 9413</strong></p>
+                <p>📍 Departs: Venice Santa Lucia at 10:26 AM</p>
+                <p>📍 Arrives: Florence Santa Maria Novella at 12:39 PM</p>
+                <p>⏱️ Duration: 2 hours 13 minutes</p>
+                <p>🎫 Business Class (Carriage 2, Seats 9A, 9B, 10A)</p>
+                <p class="confirmation">Confirmation: C5HRPN (Omio)</p>
+            </div>
+
+            <div class="info-section">
+                <h3>🏨 Spirit of Florence Boutique Rooms</h3>
+                <p>📍 4 Piazza Santo Spirito, Santo Spirito, 50125 Florence</p>
+                <p>📞 +39 347 673 1941</p>
+                <p>🕐 Check-in: 1:00 PM - 5:00 PM</p>
+                <p>🕐 Check-out: June 12 by 10:30 AM</p>
+                <p class="confirmation">Confirmation: 5544299333</p>
+            </div>
+
+            <div class="map-placeholder">🗺️ Venice → Florence</div>
+
+            <div class="journal-section">
+                <h3>✏️ Travel Journal</h3>
+                <div id="journal-day5"></div>
+                <button class="add-btn" onclick="addJournal('day5')">+ Add Journal Entry</button>
+                <button class="add-btn" onclick="addPhoto('day5')">📷 Add Photos</button>
+                <button class="add-btn" onclick="addActivity('day5')">🎫 Add Activity/Reservation</button>
+                <div class="custom-activities" id="activities-day5"></div>
+                <div class="photo-gallery" id="photos-day5"></div>
+            </div>
+        </div>
+
+        <!-- Day 6: June 10 - Florence -->
+        <div class="day-card florence">
+            <div class="day-header">
+                <h2>Day 6: Discover Florence</h2>
+                <div class="date">Tuesday, June 10, 2026</div>
+            </div>
+
+            <div class="activities-list">
+                <h3>💡 Suggested Activities</h3>
+                <ul>
+                    <li>Duomo & Baptistery</li>
+                    <li>Uffizi Gallery</li>
+                    <li>Ponte Vecchio</li>
+                    <li>Piazza della Signoria</li>
+                    <li>Gelato tasting!</li>
+                </ul>
+            </div>
+
+            <div class="map-placeholder">🗺️ Florence - Historic Center</div>
+
+            <div class="journal-section">
+                <h3>✏️ Travel Journal</h3>
